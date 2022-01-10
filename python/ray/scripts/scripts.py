@@ -1232,8 +1232,12 @@ def submit(cluster_config_file, screen, tmux, stop, start, cluster_name,
             no_config_cache=no_config_cache,
             redirect_command_output=False,
             use_login_shells=True)
+
+    project_root = os.environ.get('PROJECT_WORKING_DIRECTORY') \
+        if os.environ.get('PROJECT_WORKING_DIRECTORY') != '' else os.environ.get('HOME')
+
     target = os.path.basename(script)
-    target = os.path.join("~", target)
+    target = os.path.join(project_root, target)
     rsync(
         cluster_config_file,
         script,
